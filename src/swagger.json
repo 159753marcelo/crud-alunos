@@ -1,0 +1,184 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Alunos",
+      "version": "1.0.0",
+      "description": "API para gerenciar dados dos alunos de uma escola"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000"
+      }
+    ],
+    "components": {
+      "schemas": {
+        "Aluno": {
+          "type": "object",
+          "required": [
+            "nome",
+            "idade",
+            "nota_primeiro_semestre",
+            "nota_segundo_semestre",
+            "nome_professor",
+            "numero_sala"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "ID do aluno"
+            },
+            "nome": {
+              "type": "string",
+              "description": "Nome do aluno"
+            },
+            "idade": {
+              "type": "integer",
+              "description": "Idade do aluno"
+            },
+            "nota_primeiro_semestre": {
+              "type": "number",
+              "description": "Nota do primeiro semestre"
+            },
+            "nota_segundo_semestre": {
+              "type": "number",
+              "description": "Nota do segundo semestre"
+            },
+            "nome_professor": {
+              "type": "string",
+              "description": "Nome do professor"
+            },
+            "numero_sala": {
+              "type": "integer",
+              "description": "Número da sala"
+            }
+          },
+          "example": {
+            "nome": "João Silva",
+            "idade": 18,
+            "nota_primeiro_semestre": 8.5,
+            "nota_segundo_semestre": 7.0,
+            "nome_professor": "Prof. Maria",
+            "numero_sala": 101
+          }
+        }
+      }
+    },
+    "paths": {
+      "/alunos": {
+        "get": {
+          "summary": "Retorna a lista de todos os alunos",
+          "tags": ["Alunos"],
+          "responses": {
+            "200": {
+              "description": "Lista de alunos.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Aluno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Adiciona um novo aluno",
+          "tags": ["Alunos"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aluno"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Aluno criado com sucesso.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Aluno"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erro ao criar aluno."
+            }
+          }
+        }
+      },
+      "/alunos/{id}": {
+        "put": {
+          "summary": "Atualiza um aluno existente",
+          "tags": ["Alunos"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID do aluno"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Aluno"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Aluno atualizado com sucesso.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Aluno"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erro ao atualizar aluno."
+            }
+          }
+        },
+        "delete": {
+          "summary": "Exclui um aluno existente",
+          "tags": ["Alunos"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID do aluno"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Aluno excluído com sucesso."
+            },
+            "500": {
+              "description": "Erro ao excluir aluno."
+            }
+          }
+        }
+      }
+    }
+  }
+  
